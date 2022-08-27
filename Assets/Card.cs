@@ -5,52 +5,6 @@ using UnityEngine;
 using System.Net;
 using System.IO;
 
-/*[System.Serializable]
-public class Data
-{
-    public Card card;
-
-    public static Data GetData(string id)
-    {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards/" + id);
-        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        StreamReader reader = new StreamReader(response.GetResponseStream());
-        string json = reader.ReadToEnd();
-
-        Debug.Log("Json downloaded is: " + json);
-
-        return JsonUtility.FromJson<Data>(json);
-    }
-}
-
-[System.Serializable]
-public class Card
-{
-    public string id;
-    public string name;
-
-    public string hp;
-    public List<string> types;
-    public string rarity;
-
-    public string data;
-    //public class da
-
-    public static Card GetCard(string id)
-    {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards/" + id);
-        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        StreamReader reader = new StreamReader(response.GetResponseStream());
-        string json = reader.ReadToEnd();
-
-        Debug.Log("Json downloaded is: " + json);
-
-        return JsonUtility.FromJson<Card>(json);
-    }
-
-    
-}
-*/
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class Ability
