@@ -29,9 +29,12 @@ public class APIScript : MonoBehaviour
         //Data data = new Data();
         myRoot = Root.GetData("xy1-1");
         //myRoot
-        Debug.Log(myRoot.data.id);
+        /*Debug.Log(myRoot.data.id);
         Debug.Log(myRoot.data.name);
         Debug.Log(myRoot.data.hp);
+        Debug.Log(myRoot.data.images.small);
+        Debug.Log(myRoot.data.images.large);
+        Debug.Log(myRoot.data.legalities.expanded);*/
 
     }
 

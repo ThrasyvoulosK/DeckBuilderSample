@@ -104,14 +104,29 @@ public class Data
     public Cardmarket cardmarket ;
 }
 
+/*[System.Serializable]
 public class Images
 {
+    [SerializeField]
     public string symbol ;
+    [SerializeField]
     public string logo ;
+    [SerializeField]
     public string small ;
+    [SerializeField]
+    public string large ;
+}*/
+
+[System.Serializable]
+public class Images
+{
+    [SerializeField]
+    public string small ;
+    [SerializeField]
     public string large ;
 }
 
+[System.Serializable]
 public class Legalities
 {
     public string unlimited ;
