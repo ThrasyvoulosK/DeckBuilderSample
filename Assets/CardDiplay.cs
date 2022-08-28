@@ -25,12 +25,18 @@ public class CardDiplay : MonoBehaviour
     {
         GameObject row = gameObject.transform.Find("Row").gameObject;
 
+        //assign data from the set to the main class
+        Root root = Root.GetData(null);
+
+        //
+        GenerateRows(root, row, row.transform.childCount);
+
         //assign images by number
         int counter = 0;
         foreach(Transform card in row.transform)
         {
             Debug.Log(card.name);
-            Root root = Root.GetData("xy1-1");
+            //Root root = Root.GetData("xy1-1");
 
             //Debug.Log(root.data[0].artist);
 
@@ -66,5 +72,24 @@ public class CardDiplay : MonoBehaviour
     Sprite SpriteFromTexture2D(Texture2D texture)
     {
         return Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+    }
+
+    //generate as many rows as needed to include every card in the set
+    void GenerateRows(Root root,GameObject row, int entriesInRow)
+    {
+        int numberOfEntries = root.data.Count;
+        Debug.Log(numberOfEntries);
+
+        int numberOfRows = numberOfEntries / entriesInRow;
+        Debug.Log(numberOfRows);
+
+        for(int i=1;i<=numberOfRows;i++)
+        {
+            GameObject newRow = Instantiate(row, row.transform.parent);
+
+            //Set new entry's position relatively to the original
+            newRow.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, row.GetComponent<RectTransform>().anchoredPosition.y - i * 50f);
+        }
+
     }
 }
