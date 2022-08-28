@@ -33,15 +33,21 @@ public class CardDiplay : MonoBehaviour
 
         //assign images by number
         int counter = 0;
-        foreach(Transform card in row.transform)
+        foreach (Transform rowT in row.transform.parent)
         {
-            Debug.Log(card.name);
-            //Root root = Root.GetData("xy1-1");
+            foreach (Transform card in rowT.transform)
+            {
+                //Debug.Log(card.name);
+                Debug.Log(counter);
 
-            //Debug.Log(root.data[0].artist);
+                //do not try to assign more cards than those in the set
+                if (counter >= root.data.Count)
+                    break;
 
-            StartCoroutine(GetText(card.gameObject,root,counter));
-            counter++;
+                StartCoroutine(GetText(card.gameObject, root, counter));
+                counter++;
+                
+            }
         }
     }
 
@@ -78,10 +84,10 @@ public class CardDiplay : MonoBehaviour
     void GenerateRows(Root root,GameObject row, int entriesInRow)
     {
         int numberOfEntries = root.data.Count;
-        Debug.Log(numberOfEntries);
+        //Debug.Log(numberOfEntries);
 
         int numberOfRows = numberOfEntries / entriesInRow;
-        Debug.Log(numberOfRows);
+        //Debug.Log(numberOfRows);
 
         for(int i=1;i<=numberOfRows;i++)
         {

@@ -27,7 +27,9 @@ public class APIScript : MonoBehaviour
         Debug.Log(myData.card.data);*/
         
         //Data data = new Data();
-        myRoot = Root.GetData("xy1-1");
+
+        //myRoot = Root.GetData("xy1-1");
+
         //myRoot
         /*Debug.Log(myRoot.data.id);
         Debug.Log(myRoot.data.name);
@@ -36,7 +38,7 @@ public class APIScript : MonoBehaviour
         Debug.Log(myRoot.data.images.large);
         Debug.Log(myRoot.data.legalities.expanded);*/
 
-        myRoot.SearchCards("nationalPokedexNumbers:[1 TO 2]");
+        //myRoot.SearchCards("nationalPokedexNumbers:[1 TO 2]");
 
     }
 
