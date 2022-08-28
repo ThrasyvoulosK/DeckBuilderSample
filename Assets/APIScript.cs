@@ -36,6 +36,8 @@ public class APIScript : MonoBehaviour
         Debug.Log(myRoot.data.images.large);
         Debug.Log(myRoot.data.legalities.expanded);*/
 
+        myRoot.SearchCards("nationalPokedexNumbers:[1 TO 2]");
+
     }
 
     // Update is called once per frame

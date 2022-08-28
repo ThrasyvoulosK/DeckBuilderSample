@@ -128,11 +128,21 @@ public class ReverseHolofoil
 [System.Serializable]
 public class Root
 {
-    public Data data;//;
+    //public Data data;//;
+
+    //Further info required for searching cards
+    public List<Datum> data;
+    public int page;
+    public int pageSize;
+    public int count;
+    public int totalCount;
+
+    //Functions
 
     public static Root GetData(string id)
     {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards/" + id);
+        //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards/" + id);
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards?q=set.id:base1");
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         StreamReader reader = new StreamReader(response.GetResponseStream());
         string json = reader.ReadToEnd();
@@ -140,6 +150,19 @@ public class Root
         Debug.Log("Json downloaded is: " + json);
 
         return JsonUtility.FromJson<Root>(json);
+    }
+
+    public void SearchCards(string query)
+    {
+        Debug.Log("https://api.pokemontcg.io/v2/cards?" + query);
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards?" + query);
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+
+        Debug.Log("Json downloaded for SearchCards is: " + json);
+
+        //return JsonUtility.FromJson<Root>(json);
     }
 }
 

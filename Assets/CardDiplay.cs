@@ -24,19 +24,25 @@ public class CardDiplay : MonoBehaviour
     void CardLoad(string set)
     {
         GameObject row = gameObject.transform.Find("Row").gameObject;
+
+        //assign images by number
+        int counter = 0;
         foreach(Transform card in row.transform)
         {
             Debug.Log(card.name);
             Root root = Root.GetData("xy1-1");
 
-            StartCoroutine(GetText(card.gameObject,root));
+            //Debug.Log(root.data[0].artist);
+
+            StartCoroutine(GetText(card.gameObject,root,counter));
+            counter++;
         }
     }
 
-    IEnumerator GetText(GameObject gameObject,Root root)
+    IEnumerator GetText(GameObject gameObject,Root root,int counter)
     {
         //UnityWebRequest uwr = UnityWebRequestTexture.GetTexture("https://www.my-server.com/myimage.png");
-        UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(root.data.images.small);
+        UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(root.data[counter].images.small);
         yield return uwr.SendWebRequest();
 
         if (uwr.result != UnityWebRequest.Result.Success)
