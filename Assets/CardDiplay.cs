@@ -59,6 +59,9 @@ public class CardDiplay : MonoBehaviour
         {
             foreach (Transform card in rowT.transform)
             {
+                //rename default card object
+                card.gameObject.name ="Card"+ counter.ToString();
+
                 //Debug.Log(card.name);
                 Debug.Log(counter);
 
@@ -128,7 +131,7 @@ public class CardDiplay : MonoBehaviour
         int numberOfRows = numberOfEntries / entriesInRow;
         //Debug.Log(numberOfRows);
 
-        for(int i=1;i<=numberOfRows;i++)
+        for(int i=1;i<numberOfRows;i++)
         {
             GameObject newRow = Instantiate(row, row.transform.parent);
 
