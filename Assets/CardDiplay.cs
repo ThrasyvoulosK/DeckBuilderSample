@@ -9,16 +9,37 @@ using UnityEngine.UI;
 
 public class CardDiplay : MonoBehaviour
 {
+    //declare main object of root of card objects
+    Root root;
+
+    //
+    bool loadingDone = false;
+    int cardLoads = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        //
         CardLoad(null);
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //After loading the cards, disable the objects grandparent,
+        //until re-activated by the menu button
+        if (loadingDone == true)
+        {
+            Debug.Log("Loading Done!");
+            Debug.Log(root.data[0].artist);
+            
+            gameObject.transform.parent.transform.parent.gameObject.SetActive(false);
+
+            loadingDone = false;
+        }
+
     }
 
     void CardLoad(string set)
@@ -26,7 +47,8 @@ public class CardDiplay : MonoBehaviour
         GameObject row = gameObject.transform.Find("Row").gameObject;
 
         //assign data from the set to the main class
-        Root root = Root.GetData(null);
+        //Root root = Root.GetData(null);
+        root = Root.GetData(null);
 
         //
         GenerateRows(root, row, row.transform.childCount);
@@ -42,8 +64,16 @@ public class CardDiplay : MonoBehaviour
 
                 //do not try to assign more cards than those in the set
                 if (counter >= root.data.Count)
-                    break;
+                {
+                    /*
+                    //We are also finished with loading cards
+                    loadingDone = true;
 
+                    Debug.Log(root.data[counter - 1].images.small);
+                    Debug.Log(card.gameObject.GetComponent<Image>().sprite.name);
+                    */
+                    break;
+                }
                 StartCoroutine(GetText(card.gameObject, root, counter));
                 counter++;
                 
@@ -53,8 +83,9 @@ public class CardDiplay : MonoBehaviour
 
     IEnumerator GetText(GameObject gameObject,Root root,int counter)
     {
-        //UnityWebRequest uwr = UnityWebRequestTexture.GetTexture("https://www.my-server.com/myimage.png");
+
         UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(root.data[counter].images.small);
+        
         yield return uwr.SendWebRequest();
 
         if (uwr.result != UnityWebRequest.Result.Success)
@@ -70,6 +101,14 @@ public class CardDiplay : MonoBehaviour
             gameObject.GetComponent<Image>().sprite = webSprite;
 
             gameObject.GetComponent<Image>().preserveAspect = true;
+
+            cardLoads++;
+            //Debug.Log(gameObject.GetComponent<Image>().sprite.name);
+            if (cardLoads == root.data.Count)
+            {
+                Debug.Log("coroutines finish");
+                loadingDone = true;
+            }
         }
 
         
