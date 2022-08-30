@@ -65,9 +65,10 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
     public void RemoveCard(string name)
     {
         //first check if the clicked card is included in the deck
-        if(cardObjects.Count==0)
+        if(cardObjects.Count<=1)
         {
-            Debug.Log("no cards in this deck. Please add before removing!");
+            //Debug.Log("no cards in this deck. Please add before removing!");
+            Debug.Log("The Deck must have at least one card!");
             return;
         }
         GameObject gameObjectToDelete = gameObject.transform.Find(name).gameObject;
