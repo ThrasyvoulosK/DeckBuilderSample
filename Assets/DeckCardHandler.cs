@@ -61,5 +61,16 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         cardObjects.Add(name);
     }
 
+    public void RemoveCard(string name)
+    {
+        //first check if the clicked card is included in the deck
+        if(cardObjects.Count==0)
+        {
+            Debug.Log("no cards in this deck. Please add before removing!");
+            return;
+        }
+
+    }
+
   
 }

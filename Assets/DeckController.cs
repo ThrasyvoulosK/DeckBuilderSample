@@ -28,6 +28,15 @@ public class DeckController : MonoBehaviour
             case (action.AddCard):
                 AddCardFunction(cardName);
                 break;
+            case (action.RemoveCard):
+                RemoveCardFunction(cardName);
+                break;
+            case (action.OrderByHP):
+                break;
+            case (action.OrderByRarity):
+                break;
+            case (action.OrderByType):
+                break;
             default:
                 break;
         }
@@ -37,6 +46,11 @@ public class DeckController : MonoBehaviour
     {
         Debug.Log("Adding card " + name+" to "+currentDeck.name);
         currentDeck.GetComponent<DeckCardHandler>().GenerateCard(name);
+    }
+
+    void RemoveCardFunction(string name)
+    {
+        currentDeck.GetComponent<DeckCardHandler>().RemoveCard(name);
     }
 
     public void SwitchAction()//action currentAction
