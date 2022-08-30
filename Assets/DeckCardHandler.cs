@@ -57,6 +57,27 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         //edit its attributes
         newCard.GetComponent<TextMeshProUGUI>().text = name;
         newCard.name = name;
+        //also edit its stats by consulting the root object
+        Root root = GameObject.Find("Canvas").transform.Find("DeckMenu").transform.Find("CardSelect").Find("CardDisplay").GetComponent<CardDiplay>().root;
+        string idName = name.Remove(0, 4);//remove word 'Card' from name
+        Debug.Log(idName);
+        int cardId = int.Parse(idName);
+        newCard.GetComponent<CardStatsCondensed>().id = root.data[cardId].id;
+        newCard.GetComponent<CardStatsCondensed>().cardName = root.data[cardId].name;
+        //Debug.Log(root.data[cardId].hp);
+        if (root.data[cardId].hp == null)
+            root.data[cardId].hp = "-1";
+        newCard.GetComponent<CardStatsCondensed>().HP = int.Parse(root.data[cardId].hp);
+        //Debug.Log(root.data[cardId].types[0]);
+        if (root.data[cardId].types.Count == 0)
+        {
+            Debug.Log("Empty Type");
+            root.data[cardId].types.Add("NoType");
+        }
+        /*if (root.data[cardId].types[0] == null)
+            root.data[cardId].types[0] = "NoType";*/
+        newCard.GetComponent<CardStatsCondensed>().type = root.data[cardId].types[0];
+        newCard.GetComponent<CardStatsCondensed>().rarity = root.data[cardId].rarity;
 
         //cardObjects.Add(name);
         cardObjects.Add(newCard.gameObject);
