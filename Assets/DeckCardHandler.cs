@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
 {
-    public List<string> cardObjects=new List<string>();
+    public List<GameObject> cardObjects=new List<GameObject>();
     //write down available actions for the deck
     //enum action { AddCard, RemoveCard,OrderByType,OrderByHP,OrderByRarity,SwitchDeck,AddDeck,RemoveDeck };
 
@@ -58,7 +58,8 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         newCard.GetComponent<TextMeshProUGUI>().text = name;
         newCard.name = name;
 
-        cardObjects.Add(name);
+        //cardObjects.Add(name);
+        cardObjects.Add(newCard.gameObject);
     }
 
     public void RemoveCard(string name)
@@ -68,6 +69,39 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         {
             Debug.Log("no cards in this deck. Please add before removing!");
             return;
+        }
+        GameObject gameObjectToDelete = gameObject.transform.Find(name).gameObject;
+        //
+        int counter=-1;
+        if (gameObjectToDelete)
+        {
+            Debug.Log("Will remove" + gameObjectToDelete.name);
+            //cardObjects.Remove
+            for(int i=0;i<cardObjects.Count;i++)
+            {
+                if(cardObjects[i].name==gameObjectToDelete.name)
+                {
+                    counter = i;
+                    break;
+                }
+            }
+
+            if(counter==-1)
+            { 
+                Debug.Log("Object not found");
+            }
+            else
+            {
+                //delete from list and gameobject
+                cardObjects.RemoveAt(counter);
+                Destroy(gameObjectToDelete);
+                //sort again gameobjects in the list
+                for (int i = counter; i < cardObjects.Count; i++)
+                {
+                    cardObjects[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, cardObjects[i].GetComponent<RectTransform>().anchoredPosition.y + 15f);
+                }
+
+            }
         }
 
     }
