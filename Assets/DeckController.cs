@@ -66,4 +66,42 @@ public class DeckController : MonoBehaviour
         //change button text to correspond to new one
         gameObject.transform.Find("ActionButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentAction.ToString();
     }
+
+    //change deck to next one or previous one depending on the button pressed
+    public void SwitchCurrentDeck(GameObject buttonPressed)
+    {
+        //enable the new current deck to perform actions, while disabling the previous one
+        if(currentDeck==deckObjects[deckObjects.Count-1]&&buttonPressed.name=="NextDeck")
+        {
+            currentDeck = deckObjects[0];
+            currentDeck.SetActive(true);
+            deckObjects[deckObjects.Count - 1].SetActive(false);
+        }
+        else if (currentDeck == deckObjects[0] && buttonPressed.name == "PrevDeck")
+        {
+            currentDeck = deckObjects[deckObjects.Count - 1];
+            currentDeck.SetActive(true);
+            deckObjects[0].SetActive(false);
+        }
+        else if(buttonPressed.name== "NextDeck")
+        {
+            int i=deckObjects.IndexOf(currentDeck);
+
+            currentDeck = deckObjects[i+1];
+            currentDeck.SetActive(true);
+            deckObjects[i].SetActive(false);
+        }
+        else if (buttonPressed.name == "PrevDeck")
+        {
+            int i = deckObjects.IndexOf(currentDeck);
+
+            currentDeck = deckObjects[i - 1];
+            currentDeck.SetActive(true);
+            deckObjects[i].SetActive(false);
+        }
+        else
+        {
+            Debug.Log("No such case");
+        }
+    }
 }
