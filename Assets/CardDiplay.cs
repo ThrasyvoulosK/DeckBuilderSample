@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CardDiplay : MonoBehaviour
 {
     //declare main object of root of card objects
-    Root root;
+    public Root root;
 
     //
     bool loadingDone = false;
