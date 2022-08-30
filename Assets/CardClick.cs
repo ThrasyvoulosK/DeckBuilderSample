@@ -21,5 +21,11 @@ public class CardClick : MonoBehaviour,IPointerClickHandler
     {
         Debug.Log(name + " Game Object Clicked!");
         //throw new System.NotImplementedException();
+
+        //call card deck handler for possible actions to be taken
+        GameObject cardDeckHandler = GameObject.Find("Canvas").transform.Find("DeckMenu").transform.Find("MyDecks").gameObject;
+        DeckController deckController = cardDeckHandler.GetComponent<DeckController>();
+        //search for a suitable action based on current action and card chosen
+        deckController.SelectAction(deckController.currentAction, name);
     }
 }

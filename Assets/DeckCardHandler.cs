@@ -7,9 +7,9 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
 {
     List<string> cardObjects;
     //write down available actions for the deck
-    enum action { AddCard, RemoveCard,OrderByType,OrderByHP,OrderByRarity,SwitchDeck,AddDeck,RemoveDeck };
+    //enum action { AddCard, RemoveCard,OrderByType,OrderByHP,OrderByRarity,SwitchDeck,AddDeck,RemoveDeck };
 
-    Rigidbody2D rb2D;
+    //Rigidbody2D rb2D;
 
     // Start is called before the first frame update
     void Start()
