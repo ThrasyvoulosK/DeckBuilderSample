@@ -37,6 +37,11 @@ public class CardDiplay : MonoBehaviour
             
             gameObject.transform.parent.transform.parent.gameObject.SetActive(false);
 
+            //remove loading image as well
+            GameObject.Find("Canvas").transform.Find("LoadingImage").gameObject.SetActive(false);
+            //disable aboutmenu too
+            GameObject.Find("Canvas").transform.Find("AboutMenu").gameObject.SetActive(false);
+
             loadingDone = false;
         }
 
