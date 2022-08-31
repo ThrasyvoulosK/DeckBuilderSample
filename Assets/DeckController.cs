@@ -18,10 +18,10 @@ public class DeckController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void SelectAction(action action,string cardName)
+    public void SelectAction(action action, string cardName)
     {
         switch (action)
         {
@@ -32,10 +32,13 @@ public class DeckController : MonoBehaviour
                 RemoveCardFunction(cardName);
                 break;
             case (action.OrderByHP):
+                OrderByHP();
                 break;
             case (action.OrderByRarity):
+                OrderByRarity();
                 break;
             case (action.OrderByType):
+                OrderByType();
                 break;
             default:
                 break;
@@ -44,13 +47,27 @@ public class DeckController : MonoBehaviour
 
     void AddCardFunction(string name)
     {
-        Debug.Log("Adding card " + name+" to "+currentDeck.name);
+        Debug.Log("Adding card " + name + " to " + currentDeck.name);
         currentDeck.GetComponent<DeckCardHandler>().GenerateCard(name);
     }
 
     void RemoveCardFunction(string name)
     {
         currentDeck.GetComponent<DeckCardHandler>().RemoveCard(name);
+    }
+    void OrderByHP()
+    {
+        Debug.Log("Calling Order By HP");
+        currentDeck.GetComponent<DeckCardHandler>().OrderDeckByHP();
+    }
+    void OrderByType()
+    {
+
+    }
+
+    void OrderByRarity()
+    {
+
     }
 
     public void SwitchAction()//action currentAction
@@ -65,6 +82,13 @@ public class DeckController : MonoBehaviour
 
         //change button text to correspond to new one
         gameObject.transform.Find("ActionButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentAction.ToString();
+
+        //
+        if(currentAction.ToString().StartsWith("Order"))
+        {
+            Debug.Log("Order function called");
+            SelectAction(currentAction, null);
+        }
     }
 
     //change deck to next one or previous one depending on the button pressed

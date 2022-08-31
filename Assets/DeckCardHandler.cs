@@ -78,6 +78,7 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
             root.data[cardId].types[0] = "NoType";*/
         newCard.GetComponent<CardStatsCondensed>().type = root.data[cardId].types[0];
         newCard.GetComponent<CardStatsCondensed>().rarity = root.data[cardId].rarity;
+        //Debug.Log(newCard.GetComponent<CardStatsCondensed>().rarity);
 
         //cardObjects.Add(name);
         cardObjects.Add(newCard.gameObject);
@@ -128,5 +129,78 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
 
     }
 
-  
+    public void OrderDeckByHP()
+    {
+        //create a clone of the original list
+        List<GameObject> cardObjectsClone = new List<GameObject>();
+        foreach (GameObject gameObject in cardObjects)
+        {
+            GameObject newObject = Instantiate(gameObject);
+            
+            cardObjectsClone.Add(newObject);
+            Debug.Log(gameObject.name);
+        }
+        //sort clone
+        //cardObjectsClone.Sort(SortByHP);
+        cardObjectsClone.Sort((p1, p2) => p1.GetComponent<CardStatsCondensed>().HP.CompareTo(p2.GetComponent<CardStatsCondensed>().HP));
+        foreach (GameObject gameObject in cardObjectsClone)
+        {
+            Debug.Log("Clone"+gameObject.name);
+            Debug.Log("Clone"+gameObject.GetComponent<CardStatsCondensed>().HP);
+            
+        }
+
+        cardObjects.Clear();
+        //assign new objects on list
+        //cardObjects.Sort(SortByHP);
+        for (int i = 0; i < cardObjectsClone.Count; i++)
+        {
+            //cardObjects[i] = cardObjectsClone[i];
+            //cardObjects[i].name = cardObjectsClone[i].name;
+            //GameObject newGameObject=new GameObject();
+            //newGameObject= Instatiate(cardObjectsClone[i]);
+            //cardObjectsClone[i].name.Remove(-6);//remove clone from name
+            cardObjectsClone[i].name = cardObjectsClone[i].name.Substring(0,cardObjectsClone[i].name.Length- 7);
+            Debug.Log(cardObjectsClone[i].name);
+            cardObjects.Add(cardObjectsClone[i]);
+            cardObjects[i].GetComponent<TextMeshProUGUI>().SetText(cardObjectsClone[i].name);
+        }
+        
+        /*for (int i=0;i<cardObjects.Count;i++)
+        {
+            CardStatsCondensed cardStats = cardObjects[i].GetComponent<CardStatsCondensed>();
+            CardStatsCondensed cardStatsClone = cardObjectsClone[i].GetComponent<CardStatsCondensed>();
+
+            Debug.Log("Clone's HPs:" + cardStatsClone.HP);
+            cardObjects[i].name = cardObjectsClone[i].name;
+            //
+            //cardObjects[i].GetComponent<CardStatsCondensed>().HP = 9;
+            cardStats.HP = cardStatsClone.HP;
+            cardStats.id = cardStatsClone.id;
+            cardStats.type = cardStatsClone.type;
+            cardStats.rarity = cardStatsClone.rarity;
+            cardStats.cardName = cardStatsClone.cardName;
+
+            cardObjects[i].GetComponent<TextMeshProUGUI>().text = cardObjectsClone[i].GetComponent<TextMeshProUGUI>().text;
+        }*/
+        cardObjectsClone.Clear();
+        int newCounter = 0;
+        foreach(Transform game in gameObject.transform)
+        {
+            if (game.name == "DeckName")
+                continue;
+            game.name = cardObjects[newCounter].name;
+            newCounter++;
+        }
+        Debug.Log("Sorting Ends");
+
+    }
+    static int SortByHP(GameObject p1, GameObject p2)
+    {
+        Debug.Log("Sort by hp minifunc");
+        Debug.Log(p1.GetComponent<CardStatsCondensed>().HP.CompareTo(p2.GetComponent<CardStatsCondensed>().HP));
+        return p1.GetComponent<CardStatsCondensed>().HP.CompareTo(p2.GetComponent<CardStatsCondensed>().HP);
+    }
+
+
 }
