@@ -41,6 +41,7 @@ public class DeckController : MonoBehaviour
                 OrderByType();
                 break;
             default:
+                Debug.Log("Order Not Possible");
                 break;
         }
     }
@@ -62,12 +63,12 @@ public class DeckController : MonoBehaviour
     }
     void OrderByType()
     {
-
+        currentDeck.GetComponent<DeckCardHandler>().OrderDeckByType();
     }
 
     void OrderByRarity()
     {
-
+        currentDeck.GetComponent<DeckCardHandler>().OrderDeckByRarity();
     }
 
     public void SwitchAction()//action currentAction

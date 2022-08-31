@@ -10,10 +10,12 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
     //write down available actions for the deck
     //enum action { AddCard, RemoveCard,OrderByType,OrderByHP,OrderByRarity,SwitchDeck,AddDeck,RemoveDeck };
 
+    //Root root;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //root = GameObject.Find("Canvas").transform.Find("DeckMenu").transform.Find("CardSelect").Find("CardDisplay").GetComponent<CardDiplay>().root;
     }
 
     // Update is called once per frame
@@ -149,6 +151,36 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
             counter++;
         }
     }
+    public void OrderDeckByType()
+    {
+        cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().type).CompareTo(p2.GetComponent<CardStatsCondensed>().type));
+        int counter = 1;
+        //keep original position to rebuild later
+        Vector2 vector2 = gameObject.transform.GetChild(1).GetComponent<RectTransform>().anchoredPosition;
+        foreach (GameObject gameObject in cardObjects)
+        {
+            //change position between siblings in transform
+            gameObject.transform.SetSiblingIndex(counter);
+            gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, vector2.y - 15f * (counter - 1));
+            counter++;
+        }
+    }
+
+    public void OrderDeckByRarity()
+    {
+        cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().rarity).CompareTo(p2.GetComponent<CardStatsCondensed>().rarity));
+        int counter = 1;
+        //keep original position to rebuild later
+        Vector2 vector2 = gameObject.transform.GetChild(1).GetComponent<RectTransform>().anchoredPosition;
+        foreach (GameObject gameObject in cardObjects)
+        {
+            //change position between siblings in transform
+            gameObject.transform.SetSiblingIndex(counter);
+            gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, vector2.y - 15f * (counter - 1));
+            counter++;
+        }
+    }
+
     public void OrderDeckByHP2()
     {
         //create a clone of the original list
