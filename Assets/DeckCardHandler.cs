@@ -88,6 +88,10 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         //Debug.Log(newCard.GetComponent<CardStatsCondensed>().rarity);
 
         //cardObjects.Add(name);
+
+        //change name to cardname
+        newCard.GetComponent<TextMeshProUGUI>().SetText(newCard.GetComponent<CardStatsCondensed>().cardName);
+        newCard.name=newCard.GetComponent<CardStatsCondensed>().cardName;
         cardObjects.Add(newCard.gameObject);
 
         //
