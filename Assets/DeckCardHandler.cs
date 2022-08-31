@@ -61,9 +61,14 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         newCard.name = name;
         //also edit its stats by consulting the root object
         Root root = GameObject.Find("Canvas").transform.Find("DeckMenu").transform.Find("CardSelect").Find("CardDisplay").GetComponent<CardDiplay>().root;
+        
         string idName = name.Remove(0, 4);//remove word 'Card' from name
         Debug.Log(idName);
         int cardId = int.Parse(idName);
+
+        Debug.Log(root.data[0].name);
+        Debug.Log(root.data[cardId].id);
+
         newCard.GetComponent<CardStatsCondensed>().id = root.data[cardId].id;
         newCard.GetComponent<CardStatsCondensed>().cardName = root.data[cardId].name;
         //Debug.Log(root.data[cardId].hp);
@@ -84,6 +89,9 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
 
         //cardObjects.Add(name);
         cardObjects.Add(newCard.gameObject);
+
+        //
+        root = null;
     }
 
     public void RemoveCard(string name)
@@ -133,6 +141,9 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
 
     public void OrderDeckByHP()
     {
+        if (cardObjects.Count <= 1)
+            return;
+
         cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().HP).CompareTo(p2.GetComponent<CardStatsCondensed>().HP));
         int counter = 1;
         //RectTransform rectTransform = new RectTransform;
@@ -153,6 +164,9 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
     }
     public void OrderDeckByType()
     {
+        if (cardObjects.Count <= 1)
+            return;
+
         cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().type).CompareTo(p2.GetComponent<CardStatsCondensed>().type));
         int counter = 1;
         //keep original position to rebuild later
@@ -168,6 +182,9 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
 
     public void OrderDeckByRarity()
     {
+        if (cardObjects.Count <= 1)
+            return;
+
         cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().rarity).CompareTo(p2.GetComponent<CardStatsCondensed>().rarity));
         int counter = 1;
         //keep original position to rebuild later
