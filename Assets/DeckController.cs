@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DeckController : MonoBehaviour
 {
@@ -128,5 +129,8 @@ public class DeckController : MonoBehaviour
         {
             Debug.Log("No such case");
         }
+
+        //also set scroll rect to new object
+        GetComponent<ScrollRect>().content = currentDeck.GetComponent<RectTransform>();
     }
 }
