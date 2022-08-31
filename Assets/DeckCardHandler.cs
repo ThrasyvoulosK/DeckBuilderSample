@@ -148,6 +148,8 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         if (cardObjects.Count <= 1)
             return;
 
+        Debug.Log("OrderDeckByHP called");
+
         cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().HP).CompareTo(p2.GetComponent<CardStatsCondensed>().HP));
         int counter = 1;
         //RectTransform rectTransform = new RectTransform;
@@ -157,12 +159,13 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         //Debug.Log(Vector2.y.ToString())
         foreach (GameObject gameObject in cardObjects)
         {
-            Debug.Log("Clone" + gameObject.name);
+            /*Debug.Log("Clone" + gameObject.name);
             Debug.Log("Clone" + gameObject.GetComponent<CardStatsCondensed>().HP);
-            Debug.Log("Clone" + gameObject.GetComponent<CardStatsCondensed>().cardName);
+            Debug.Log("Clone" + gameObject.GetComponent<CardStatsCondensed>().cardName);*/
             //change position between siblings in transform
             gameObject.transform.SetSiblingIndex(counter);
-            gameObject.GetComponent<RectTransform>().anchoredPosition= new Vector2(0, vector2.y - 15f*(counter-1));
+            //gameObject.GetComponent<RectTransform>().anchoredPosition= new Vector2(0, vector2.y - 15f*(counter-1));
+            gameObject.GetComponent<RectTransform>().anchoredPosition= new Vector2(vector2.x, vector2.y - 15f*(counter-1));
             counter++;
         }
     }
@@ -170,6 +173,8 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
     {
         if (cardObjects.Count <= 1)
             return;
+
+        Debug.Log("OrderDeckByType called");
 
         cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().type).CompareTo(p2.GetComponent<CardStatsCondensed>().type));
         int counter = 1;
@@ -179,7 +184,8 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         {
             //change position between siblings in transform
             gameObject.transform.SetSiblingIndex(counter);
-            gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, vector2.y - 15f * (counter - 1));
+            //gameObject.GetComponent<RectTransform>().anchoredPosition= new Vector2(0, vector2.y - 15f*(counter-1));
+            gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(vector2.x, vector2.y - 15f * (counter - 1));
             counter++;
         }
     }
@@ -189,6 +195,8 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         if (cardObjects.Count <= 1)
             return;
 
+        Debug.Log("OrderDeckByRarity called");
+
         cardObjects.Sort((p1, p2) => (p1.GetComponent<CardStatsCondensed>().rarity).CompareTo(p2.GetComponent<CardStatsCondensed>().rarity));
         int counter = 1;
         //keep original position to rebuild later
@@ -197,7 +205,8 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         {
             //change position between siblings in transform
             gameObject.transform.SetSiblingIndex(counter);
-            gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, vector2.y - 15f * (counter - 1));
+            //gameObject.GetComponent<RectTransform>().anchoredPosition= new Vector2(0, vector2.y - 15f*(counter-1));
+            gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(vector2.x, vector2.y - 15f * (counter - 1));
             counter++;
         }
     }

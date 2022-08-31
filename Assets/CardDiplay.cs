@@ -68,7 +68,7 @@ public class CardDiplay : MonoBehaviour
                 card.gameObject.name ="Card"+ counter.ToString();
 
                 //Debug.Log(card.name);
-                Debug.Log(counter);
+                //Debug.Log(counter);
 
                 //do not try to assign more cards than those in the set
                 if (counter >= root.data.Count)
