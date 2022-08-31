@@ -4,6 +4,7 @@ using UnityEngine;
 
 using System.Net;
 using System.IO;
+using UnityEngine.Networking;
 
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
@@ -139,19 +140,38 @@ public class Root
 
     //Functions
 
-    public static Root GetData(string id)
+    public static Root GetData(string url)
     {
+        /*
+        //MonoBehaviour.StartCoroutine(GetRequest("https://error.html"));
+
         //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards/" + id);
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards?q=set.id:base1");
-        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        StreamReader reader = new StreamReader(response.GetResponseStream());
+        //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.pokemontcg.io/v2/cards?q=set.id:base1");
+        string url = "https://api.pokemontcg.io/v2/cards?q=set.id:base1";         
+        //WebRequest request = WebRequest.Create(url);
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //WebResponse response = request.GetResponse();
+        UnityWebRequest.Result response = request.result;
+        //StreamReader reader = new StreamReader(response.GetResponseStream());
+        //StreamReader reader = new StreamReader(response.ToString());
+        Debug.Log(request.downloadHandler.text);
+        StreamReader reader = new StreamReader(request.downloadHandler.text);
+        */
+        //string json = reader.ReadToEnd();
+
+        StreamReader reader = new StreamReader(url);
         string json = reader.ReadToEnd();
+        //string json = url;
 
         Debug.Log("Json downloaded is: " + json);
 
         return JsonUtility.FromJson<Root>(json);
     }
 
+    
+
+    /*
     public void SearchCards(string query)
     {
         Debug.Log("https://api.pokemontcg.io/v2/cards?" + query);
@@ -163,7 +183,7 @@ public class Root
         Debug.Log("Json downloaded for SearchCards is: " + json);
 
         //return JsonUtility.FromJson<Root>(json);
-    }
+    }*/
 }
 
 public class Set

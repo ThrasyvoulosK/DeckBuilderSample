@@ -6,28 +6,93 @@ using UnityEngine;
 using System.Net;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.IO;
 
 public class CardDiplay : MonoBehaviour
 {
     //declare main object of root of card objects
-    public Root root;
+    public static Root root;//=new Root();
 
     //
     bool loadingDone = false;
+    static bool webLoad = false;
     int cardLoads = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(GetRequest("https://api.pokemontcg.io/v2/cards?q=set.id:base1"));
         //
-        CardLoad(null);
+        //CardLoad(null);
+        //CardLoad("id-x");
 
         
     }
+    static IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
 
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                    //CardDiplay.root = Root.GetData(uri);
+                    //callRoot(uri);
+                    //StreamReader reader = new StreamReader(webRequest.downloadHandler.text);
+                    string toRead = webRequest.downloadHandler.text;
+                    //Debug.Log(toRead);
+                    /*
+                     StreamReader reader = new StreamReader(toRead);
+                    string json = reader.ReadToEnd();
+                    //string json = url;
+
+                    Debug.Log("Json downloaded is: " + json);
+
+                    //root= JsonUtility.FromJson<Root>(json);
+                    */
+                    root= JsonUtility.FromJson<Root>(toRead);
+                    //root = Root.GetData(uri);
+                    Debug.Log(root.data[0].artist);
+                    Debug.Log(root.data[1].artist);
+                    Debug.Log(root.data[10].artist);
+                    Debug.Log(root.data[100].artist);
+
+                    //Now we have connected succesfuly online
+                    webLoad = true;
+                    break;
+            }
+        }
+    }
+    /*public void callRoot(string url)
+    {
+        root = Root.GetData(url);
+    }*/
     // Update is called once per frame
     void Update()
     {
+        if (webLoad == true)
+        {
+            Debug.Log("Webloaded");
+            CardLoad("id-x");
+            webLoad = false;
+        }
+        else
+        {
+            //Debug.Log("Webloaded false");
+        }
         //After loading the cards, disable the objects grandparent,
         //until re-activated by the menu button
         if (loadingDone == true)
@@ -49,26 +114,39 @@ public class CardDiplay : MonoBehaviour
 
     void CardLoad(string set)
     {
+        Debug.Log("Called CardLoad");
         GameObject row = gameObject.transform.Find("Row").gameObject;
 
         //assign data from the set to the main class
         //Root root = Root.GetData(null);
-        root = Root.GetData(null);
+        //root = Root.GetData(null);
+
+        /* root = Root.GetData("id-x");*/
 
         //
+        Debug.Log("Calling GenerateRows");
+        Debug.Log(row.name);
+        Debug.Log(row.transform.childCount);
+        Debug.Log(root.data.Count);
         GenerateRows(root, row, row.transform.childCount);
 
         //assign images by number
         int counter = 0;
+        Debug.Log("Calling loop");
         foreach (Transform rowT in row.transform.parent)
         {
+            Debug.Log("first loop");
             foreach (Transform card in rowT.transform)
             {
+                Debug.Log("second loop");
+
                 //rename default card object
+                Debug.Log(card.gameObject.name);
                 card.gameObject.name ="Card"+ counter.ToString();
 
                 //Debug.Log(card.name);
-                //Debug.Log(counter);
+                Debug.Log(counter);
+                Debug.Log(root.data.Count);
 
                 //do not try to assign more cards than those in the set
                 if (counter >= root.data.Count)
@@ -82,6 +160,7 @@ public class CardDiplay : MonoBehaviour
                     */
                     break;
                 }
+                Debug.Log("Calling GetText");
                 StartCoroutine(GetText(card.gameObject, root, counter));
                 counter++;
                 

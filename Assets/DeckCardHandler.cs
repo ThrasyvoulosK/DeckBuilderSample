@@ -60,7 +60,9 @@ public class DeckCardHandler : MonoBehaviour //,IPointerClickHandler
         newCard.GetComponent<TextMeshProUGUI>().text = name;
         newCard.name = name;
         //also edit its stats by consulting the root object
-        Root root = GameObject.Find("Canvas").transform.Find("DeckMenu").transform.Find("CardSelect").Find("CardDisplay").GetComponent<CardDiplay>().root;
+        //Root root = GameObject.Find("Canvas").transform.Find("DeckMenu").transform.Find("CardSelect").Find("CardDisplay").GetComponent<CardDiplay>().root;
+        //static Root root = root;
+        Root root = CardDiplay.root;
         
         string idName = name.Remove(0, 4);//remove word 'Card' from name
         Debug.Log(idName);
